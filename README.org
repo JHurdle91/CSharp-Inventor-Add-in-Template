@@ -1,0 +1,19 @@
+
+	CSharp Add-In for Autodesk Inventor
+	======================================
+
+	This is a template for developing add-ins for Autodesk Inventor using CSharp.
+
+	It is derived from Brian Ekins' "Nifty Add-In Template" found here:
+	https://ekinssolutions.com/nifty_addin_template/
+
+	I've tweaked the template for my own use and converted it to C# using dotPeek by jetbrains found here:
+	https://www.jetbrains.com/decompiler/
+
+    To use this as a template:
+    1. open the .sln in visual studio
+    2. file > export template
+    3. create new project from the template
+    4. See [[https://github.com/JHurdle91/CSharp-Inventor-Add-in-Template/commit/50d61a90ecb66be848e9537d6c7b6c1d830dfe74][this commit]] for an example of what to change if making another add-in
+       from this template.
+       - I also added an example button and command to the add-in in this commit.
