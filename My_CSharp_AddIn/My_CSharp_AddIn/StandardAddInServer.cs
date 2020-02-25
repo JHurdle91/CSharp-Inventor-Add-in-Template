@@ -101,6 +101,34 @@ namespace My_CSharp_AddIn
                         _MySecondButton.OnExecute += MySecondButton_OnExecute;
                     }
                 }
+
+            }
+
+            private ButtonDefinition _CloseDocButton;
+
+            private ButtonDefinition CloseDocButton
+            {
+                [MethodImpl(MethodImplOptions.Synchronized)]
+                get
+                {
+                    return _CloseDocButton;
+                }
+
+                [MethodImpl(MethodImplOptions.Synchronized)]
+                set
+                {
+                    if (_CloseDocButton != null)
+                    {
+                        _CloseDocButton.OnExecute -= CloseDocButton_OnExecute;
+                    }
+
+                    _CloseDocButton = value;
+                    if (_CloseDocButton != null)
+                    {
+                        _CloseDocButton.OnExecute += CloseDocButton_OnExecute;
+                    }
+                }
+
             }
 
 
@@ -127,6 +155,7 @@ namespace My_CSharp_AddIn
                     // ButtonName = Utilities.CreateButtonDefinition(display_text, internal_name, "", icon_path)
                     MyFirstButton = Utilities.CreateButtonDefinition("    My First    \n    Command    ", "MyFirstCommand", "", @"ButtonResources\MyIcon1");
                     MySecondButton = Utilities.CreateButtonDefinition("    My Second    \n    Command    ", "MySecondCommand", "", @"ButtonResources\MyIcon2");
+                    CloseDocButton = Utilities.CreateButtonDefinition("    Close    \n    Document    ", "CloseDocCommand", "", @"ButtonResources\MyIcon3");
 
                     // Add to the user interface, if it's the first time.
                     // If this add-in doesn't have a UI but runs in the background listening
@@ -147,6 +176,7 @@ namespace My_CSharp_AddIn
                 // Release objects.
                 MyFirstButton = null;
                 MySecondButton = null;
+                CloseDocButton = null;
                 m_uiEvents = null;
                 Globals.invApp = null;
 
@@ -224,6 +254,10 @@ namespace My_CSharp_AddIn
                 if (!(MySecondButton == null))
                     MyPanel_prt.CommandControls.AddButton(MySecondButton, true);
                 MyPanel_dwg.CommandControls.AddButton(MySecondButton, true);
+
+                if (!(CloseDocButton == null))
+                    MyPanel_prt.CommandControls.AddButton(CloseDocButton, true);
+                MyPanel_dwg.CommandControls.AddButton(CloseDocButton, true);
             }
 
 
@@ -284,6 +318,11 @@ namespace My_CSharp_AddIn
             {
                 CommandFunctions.PopupMessage();
             }
+
+            private void CloseDocButton_OnExecute(NameValueMap Context)
+            {
+                CommandFunctions.CloseDocument();
+            }
         }
     }
 
@@ -296,7 +335,7 @@ namespace My_CSharp_AddIn
         // The unique ID for this add-in.  If this add-in is copied to create a new add-in
         // you need to update this ID along with the ID in the .manifest file, the .addin file
         // and create a new ID for the typelib GUID in AssemblyInfo.vb
-        public const string g_simpleAddInClientID = "ff0f87f8-346a-449f-bede-49851b210743";
+        public const string g_simpleAddInClientID = "ff0f87f8-457b-449f-bede-49851b210743";
         public const string g_addInClientID = "{" + g_simpleAddInClientID + "}";
     }
 }

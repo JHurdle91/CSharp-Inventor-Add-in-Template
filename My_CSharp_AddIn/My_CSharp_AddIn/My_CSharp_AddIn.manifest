@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+  <assemblyIdentity name="CSharp_AddIn" version="1.0.0.0"></assemblyIdentity>
+  <clrClass clsid="{ff0f87f8-457b-449f-bede-49851b210743}" progid="My_CSharp_AddIn.StandardAddInServer" threadingModel="Both" name="My_CSharp_AddIn.My_CSharp_AddIn.StandardAddInServer" runtimeVersion=""></clrClass>
+  <file name="My_CSharp_AddIn.dll" hashalg="SHA1"></file>
+</assembly>

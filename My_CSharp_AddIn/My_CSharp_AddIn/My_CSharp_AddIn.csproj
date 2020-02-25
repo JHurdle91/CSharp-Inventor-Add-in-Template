@@ -109,12 +109,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Sample_CSharp_AddIn.manifest">
+    <None Include="My_CSharp_AddIn.manifest">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Autodesk.Sample_CSharp_AddIn.Inventor.addin">
+    <None Include="Autodesk.My_CSharp_AddIn.Inventor.addin">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -165,6 +165,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ButtonResources\MyIcon2\32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ButtonResources\MyIcon3\16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ButtonResources\MyIcon3\32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
