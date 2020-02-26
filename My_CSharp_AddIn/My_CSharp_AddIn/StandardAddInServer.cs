@@ -161,7 +161,9 @@ namespace My_CSharp_AddIn
                     // If this add-in doesn't have a UI but runs in the background listening
                     // to events, you can delete this.
                     if (firstTime)
+                    {
                         AddToUserInterface();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -248,16 +250,22 @@ namespace My_CSharp_AddIn
 
                 // Set up Buttons.
                 if (!(MyFirstButton == null))
+                {
                     MyPanel_asm.CommandControls.AddButton(MyFirstButton, true);
-                MyPanel_dwg.CommandControls.AddButton(MyFirstButton, true);
+                    MyPanel_dwg.CommandControls.AddButton(MyFirstButton, true);
+                }
 
                 if (!(MySecondButton == null))
+                {
                     MyPanel_prt.CommandControls.AddButton(MySecondButton, true);
-                MyPanel_dwg.CommandControls.AddButton(MySecondButton, true);
+                    MyPanel_dwg.CommandControls.AddButton(MySecondButton, true);
+                }
 
                 if (!(CloseDocButton == null))
+                {
                     MyPanel_prt.CommandControls.AddButton(CloseDocButton, true);
-                MyPanel_dwg.CommandControls.AddButton(CloseDocButton, true);
+                    MyPanel_dwg.CommandControls.AddButton(CloseDocButton, true);
+                }
             }
 
 
@@ -274,7 +282,9 @@ namespace My_CSharp_AddIn
                 }
 
                 if (ribbon_tab == null)
+                {
                     ribbon_tab = inv_ribbon.RibbonTabs.Add(display_name, internal_name, Globals.g_addInClientID);
+                }
 
                 setup_tabRet = ribbon_tab;
                 return setup_tabRet;
@@ -294,7 +304,9 @@ namespace My_CSharp_AddIn
                 }
 
                 if (ribbon_panel == null)
+                {
                     ribbon_panel = ribbon_tab.RibbonPanels.Add(display_name, internal_name, Globals.g_addInClientID);
+                }
 
                 setup_panelRet = ribbon_panel;
                 return setup_panelRet;
