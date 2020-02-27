@@ -24,7 +24,7 @@ namespace My_CSharp_AddIn
             // if the user resets the ribbon so the button can be added back in.
             private UserInterfaceEvents _m_uiEvents;
 
-            private UserInterfaceEvents m_uiEvents
+            public UserInterfaceEvents m_uiEvents
             {
                 [MethodImpl(MethodImplOptions.Synchronized)]
                 get
@@ -51,86 +51,66 @@ namespace My_CSharp_AddIn
             // Declaration of the button definition with events to handle the click event.
             // For additional commands this declaration along with other sections of code
             // that apply to the button can be duplicated from this example.
-            private ButtonDefinition _MyFirstButton;
-
-            private ButtonDefinition MyFirstButton
+            public class UI_Button
             {
-                [MethodImpl(MethodImplOptions.Synchronized)]
-                get
-                {
-                    return _MyFirstButton;
-                }
+                private ButtonDefinition _bd;
 
-                [MethodImpl(MethodImplOptions.Synchronized)]
-                set
+                public ButtonDefinition bd
                 {
-                    if (_MyFirstButton != null)
+                    [MethodImpl(MethodImplOptions.Synchronized)]
+                    get
                     {
-                        _MyFirstButton.OnExecute -= MyFirstButton_OnExecute;
+                        return this._bd;
                     }
 
-                    _MyFirstButton = value;
-                    if (_MyFirstButton != null)
+                    [MethodImpl(MethodImplOptions.Synchronized)]
+                    set
                     {
-                        _MyFirstButton.OnExecute += MyFirstButton_OnExecute;
+                        if (this._bd != null)
+                        {
+                            this._bd.OnExecute -= bd_OnExecute;
+                        }
+
+                        this._bd = value;
+                        if (this._bd != null)
+                        {
+                            this._bd.OnExecute += bd_OnExecute;
+                        }
+                    }
+                }
+
+                private void bd_OnExecute(NameValueMap Context)
+                {
+                    // Link button clicks to their respective commands.
+                    switch (bd.InternalName)
+                    {
+                        case "my_first_button":
+                            CommandFunctions.RunAnExe();
+                            return;
+                        case "my_second_button":
+                            CommandFunctions.PopupMessage();
+                            return;
+                        case "close_doc_button":
+                            CommandFunctions.CloseDocument();
+                            return;
+                        default:
+                            return;
                     }
                 }
             }
 
-            private ButtonDefinition _MySecondButton;
-
-            private ButtonDefinition MySecondButton
+            public delegate ButtonDefinition CreateButton(string display_text, string internal_name, string icon_path);
+            public ButtonDefinition button_template(string display_text, string internal_name, string icon_path)
             {
-                [MethodImpl(MethodImplOptions.Synchronized)]
-                get
-                {
-                    return _MySecondButton;
-                }
-
-                [MethodImpl(MethodImplOptions.Synchronized)]
-                set
-                {
-                    if (_MySecondButton != null)
-                    {
-                        _MySecondButton.OnExecute -= MySecondButton_OnExecute;
-                    }
-
-                    _MySecondButton = value;
-                    if (_MySecondButton != null)
-                    {
-                        _MySecondButton.OnExecute += MySecondButton_OnExecute;
-                    }
-                }
-
+                UI_Button MyButton = new UI_Button();
+                MyButton.bd = Utilities.CreateButtonDefinition(display_text, internal_name, "", icon_path);
+                return MyButton.bd;
             }
 
-            private ButtonDefinition _CloseDocButton;
-
-            private ButtonDefinition CloseDocButton
-            {
-                [MethodImpl(MethodImplOptions.Synchronized)]
-                get
-                {
-                    return _CloseDocButton;
-                }
-
-                [MethodImpl(MethodImplOptions.Synchronized)]
-                set
-                {
-                    if (_CloseDocButton != null)
-                    {
-                        _CloseDocButton.OnExecute -= CloseDocButton_OnExecute;
-                    }
-
-                    _CloseDocButton = value;
-                    if (_CloseDocButton != null)
-                    {
-                        _CloseDocButton.OnExecute += CloseDocButton_OnExecute;
-                    }
-                }
-
-            }
-
+            // Declare all buttons here
+            ButtonDefinition MyFirstButton;
+            ButtonDefinition MySecondButton;
+            ButtonDefinition CloseDocButton;
 
             // This method is called by Inventor when it loads the AddIn. The AddInSiteObject provides access  
             // to the Inventor Application object. The FirstTime flag indicates if the AddIn is loaded for
@@ -151,11 +131,11 @@ namespace My_CSharp_AddIn
                     // * background handling events.
                     // *********************************************************************************
 
-                    // Create the button definition using the CreateButtonDefinition function to simplify this step.
-                    // ButtonName = Utilities.CreateButtonDefinition(display_text, internal_name, "", icon_path)
-                    MyFirstButton = Utilities.CreateButtonDefinition("    My First    \n    Command    ", "MyFirstCommand", "", @"ButtonResources\MyIcon1");
-                    MySecondButton = Utilities.CreateButtonDefinition("    My Second    \n    Command    ", "MySecondCommand", "", @"ButtonResources\MyIcon2");
-                    CloseDocButton = Utilities.CreateButtonDefinition("    Close    \n    Document    ", "CloseDocCommand", "", @"ButtonResources\MyIcon3");
+                    // ButtonName = create_button(display_text, internal_name, icon_path)
+                    CreateButton create_button = new CreateButton (button_template);
+                    MyFirstButton = create_button("    My First    \n    Command    ", "my_first_button", @"ButtonResources\MyIcon1");
+                    MySecondButton = create_button("    My Second    \n    Command    ", "my_second_button", @"ButtonResources\MyIcon2");
+                    CloseDocButton = create_button("    Close    \n    Document    ", "close_doc_button", @"ButtonResources\MyIcon3");
 
                     // Add to the user interface, if it's the first time.
                     // If this add-in doesn't have a UI but runs in the background listening
@@ -219,9 +199,9 @@ namespace My_CSharp_AddIn
                 // Presentation
                 // iFeatures
                 // UnknownDocument
-                var asmRibbon = Globals.invApp.UserInterfaceManager.Ribbons["Assembly"];
-                var prtRibbon = Globals.invApp.UserInterfaceManager.Ribbons["Part"];
-                var dwgRibbon = Globals.invApp.UserInterfaceManager.Ribbons["Drawing"];
+                Ribbon asmRibbon = Globals.invApp.UserInterfaceManager.Ribbons["Assembly"];
+                Ribbon prtRibbon = Globals.invApp.UserInterfaceManager.Ribbons["Part"];
+                Ribbon dwgRibbon = Globals.invApp.UserInterfaceManager.Ribbons["Drawing"];
 
 
                 // Set up Tabs.
@@ -317,23 +297,6 @@ namespace My_CSharp_AddIn
             {
                 // The ribbon was reset, so add back the add-ins user-interface.
                 AddToUserInterface();
-            }
-
-
-            // Link button clicks to their respective commands.
-            private void MyFirstButton_OnExecute(NameValueMap Context)
-            {
-                CommandFunctions.RunAnExe();
-            }
-
-            private void MySecondButton_OnExecute(NameValueMap Context)
-            {
-                CommandFunctions.PopupMessage();
-            }
-
-            private void CloseDocButton_OnExecute(NameValueMap Context)
-            {
-                CommandFunctions.CloseDocument();
             }
         }
     }

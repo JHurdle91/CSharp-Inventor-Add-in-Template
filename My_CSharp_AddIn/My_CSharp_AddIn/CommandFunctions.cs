@@ -13,7 +13,7 @@ namespace My_CSharp_AddIn
     {
         public static void RunAnExe()
         {
-            var proc = new Process();
+            Process proc = new Process();
             proc = Process.Start(@"C:\path_to\some_file.exe", "");
         }
 

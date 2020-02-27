@@ -88,7 +88,7 @@ namespace My_CSharp_AddIn
                     {
                         try
                         {
-                            var image16x16 = new System.Drawing.Bitmap(filename16x16);
+                            System.Drawing.Bitmap image16x16 = new System.Drawing.Bitmap(filename16x16);
                             iPicDisp16x16 = ConvertImage.ConvertImageToIPictureDisp(image16x16);
                         }
                         catch (Exception ex)
@@ -103,7 +103,7 @@ namespace My_CSharp_AddIn
                     {
                         try
                         {
-                            var image32x32 = new System.Drawing.Bitmap(filename32x32);
+                            System.Drawing.Bitmap image32x32 = new System.Drawing.Bitmap(filename32x32);
                             iPicDisp32x32 = ConvertImage.ConvertImageToIPictureDisp(image32x32);
                         }
                         catch (Exception ex)
@@ -119,10 +119,10 @@ namespace My_CSharp_AddIn
             try
             {
                 // Get the ControlDefinitions collection.
-                var controlDefs = Globals.invApp.CommandManager.ControlDefinitions;
+                ControlDefinitions controlDefs = Globals.invApp.CommandManager.ControlDefinitions;
 
                 // Create the command defintion.
-                var btnDef = controlDefs.AddButtonDefinition(DisplayName, InternalName, Inventor.CommandTypesEnum.kShapeEditCmdType, Globals.g_addInClientID, "", ToolTip, iPicDisp16x16, iPicDisp32x32);
+                ButtonDefinition btnDef = controlDefs.AddButtonDefinition(DisplayName, InternalName, Inventor.CommandTypesEnum.kShapeEditCmdType, Globals.g_addInClientID, "", ToolTip, iPicDisp16x16, iPicDisp32x32);
                 return btnDef;
             }
             catch (Exception ex)
