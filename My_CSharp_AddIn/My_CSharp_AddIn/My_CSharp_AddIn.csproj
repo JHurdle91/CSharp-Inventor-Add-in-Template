@@ -172,6 +172,12 @@
   <ItemGroup>
     <None Include="ButtonResources\MyIcon3\32x32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ButtonResources\MyIcon4\16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ButtonResources\MyIcon4\32x32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

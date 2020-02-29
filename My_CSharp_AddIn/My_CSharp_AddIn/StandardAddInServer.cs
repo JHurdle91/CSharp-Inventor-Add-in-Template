@@ -93,6 +93,9 @@ namespace My_CSharp_AddIn
                         case "close_doc_button":
                             CommandFunctions.CloseDocument();
                             return;
+                        case "export_dxf_button":
+                            CommandFunctions.ExportDxf();
+                            return;
                         default:
                             return;
                     }
@@ -111,6 +114,7 @@ namespace My_CSharp_AddIn
             ButtonDefinition MyFirstButton;
             ButtonDefinition MySecondButton;
             ButtonDefinition CloseDocButton;
+            ButtonDefinition ExportDxfButton;
 
             // This method is called by Inventor when it loads the AddIn. The AddInSiteObject provides access  
             // to the Inventor Application object. The FirstTime flag indicates if the AddIn is loaded for
@@ -136,6 +140,7 @@ namespace My_CSharp_AddIn
                     MyFirstButton = create_button("    My First    \n    Command    ", "my_first_button", @"ButtonResources\MyIcon1");
                     MySecondButton = create_button("    My Second    \n    Command    ", "my_second_button", @"ButtonResources\MyIcon2");
                     CloseDocButton = create_button("    Close    \n    Document    ", "close_doc_button", @"ButtonResources\MyIcon3");
+                    ExportDxfButton = create_button("    Export    \n    DXF    ", "export_dxf_button", @"ButtonResources\MyIcon4");
 
                     // Add to the user interface, if it's the first time.
                     // If this add-in doesn't have a UI but runs in the background listening
@@ -159,6 +164,7 @@ namespace My_CSharp_AddIn
                 MyFirstButton = null;
                 MySecondButton = null;
                 CloseDocButton = null;
+                ExportDxfButton = null;
                 m_uiEvents = null;
                 Globals.invApp = null;
 
@@ -221,6 +227,9 @@ namespace My_CSharp_AddIn
                 RibbonPanel MyPanel_prt;
                 MyPanel_prt = setup_panel("My Panel", "my_panel_prt", MyTab_prt);
 
+                RibbonPanel ExportPanel_prt;
+                ExportPanel_prt = setup_panel("Export", "export_panel_prt", MyTab_prt);
+
                 RibbonPanel MyPanel_dwg;
                 MyPanel_dwg = setup_panel("My Panel", "my_panel_dwg", MyTab_dwg);
 
@@ -245,6 +254,11 @@ namespace My_CSharp_AddIn
                 {
                     MyPanel_prt.CommandControls.AddButton(CloseDocButton, true);
                     MyPanel_dwg.CommandControls.AddButton(CloseDocButton, true);
+                }
+
+                if (!(ExportDxfButton == null))
+                {
+                    ExportPanel_prt.CommandControls.AddButton(ExportDxfButton, true);
                 }
             }
 
