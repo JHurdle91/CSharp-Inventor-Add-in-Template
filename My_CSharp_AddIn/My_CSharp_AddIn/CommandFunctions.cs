@@ -38,6 +38,19 @@ namespace My_CSharp_AddIn
                 return;
             }
 
+            string DXF_PATH;
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.Description = "Select DXF Folder";
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                DXF_PATH = fbd.SelectedPath;
+            }
+            else
+            {
+                MessageBox.Show("Must specify DXF path");
+                return;
+            }
+
             SheetMetalComponentDefinition smcd;
             smcd = (SheetMetalComponentDefinition)doc.ComponentDefinition;
 
@@ -72,19 +85,6 @@ namespace My_CSharp_AddIn
                                                 "IV_ROLL" +
                                             "&SimplifySplines=True" +
                                             "&BendLayerColor=255;255;0";
-
-            string DXF_PATH;
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.Description = "Select DXF Folder";
-            if (fbd.ShowDialog() == DialogResult.OK)
-            {
-                DXF_PATH = fbd.SelectedPath;
-            }
-            else
-            {
-                MessageBox.Show("Must specify DXF path");
-                return;
-            }
 
             string DISPLAY_NAME = doc.DisplayName;
             string dxf_filename = string.Format("{0}\\{1}.dxf", DXF_PATH, DISPLAY_NAME);
